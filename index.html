@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YatriBus - India's Priority Bus Network</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- TOP NAVIGATION -->
+    <nav class="navbar">
+        <div class="brand">🚌 YatriBus</div>
+        <div id="nav-links">
+            <button onclick="showView('login-view')" class="nav-btn">Login</button>
+            <button onclick="showView('register-view')" class="nav-btn primary">Register</button>
+        </div>
+    </nav>
+
+    <!-- MAIN APP WRAPPER -->
+    <div class="app-wrapper">
+        
+        <!-- SIDE NAVIGATION PANE -->
+        <aside class="nav-pane" id="nav-pane">
+            <h3>Menu</h3>
+            <a href="#" onclick="showView('dashboard-view')" class="active">🏠 Dashboard</a>
+            <a href="#book-ticket-form">🎫 Book Ticket</a>
+            <a href="#user-tickets-list">🚍 My Journeys</a>
+            <a href="#" onclick="alert('Profile settings coming soon!')">👤 My Profile</a>
+            <a href="#" onclick="alert('Contact Support: 1800-123-4567')">📞 Support Center</a>
+        </aside>
+
+        <!-- MAIN CONTENT CONTAINER -->
+        <main class="container">
+            <!-- LOGIN VIEW -->
+            <div id="login-view" class="view active">
+                <h2>User Login</h2>
+                <form id="login-form">
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="primary-btn">Login to Dashboard</button>
+                    <p id="login-msg" class="msg-error"></p>
+                </form>
+            </div>
+
+            <!-- REGISTER VIEW -->
+            <div id="register-view" class="view">
+                <h2>Create an Account</h2>
+                <p style="margin-bottom: 20px; color: #64748b; font-size: 1.1em;">Please provide your details below to register.</p>
+                <form id="register-form">
+                    <div class="input-row">
+                        <div class="input-group"><label>Full Name</label><input type="text" id="reg-name" required></div>
+                        <div class="input-group"><label>Email</label><input type="email" id="reg-email" required></div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group"><label>Password</label><input type="password" id="reg-password" required></div>
+                        <div class="input-group"><label>Phone Number</label><input type="tel" id="reg-phone" required></div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group"><label>Age</label><input type="number" id="reg-age" required min="1"></div>
+                        <div class="input-group">
+                            <label>Gender</label>
+                            <select id="reg-gender" required>
+                                <option value="">Select...</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group"><label>Full Residential Address</label><input type="text" id="reg-address" required></div>
+                    <div class="input-group checkbox-group">
+                        <input type="checkbox" id="reg-disability">
+                        <label for="reg-disability">I require accessible seating (Divyang / Disability Priority)</label>
+                    </div>
+                    <button type="submit" class="primary-btn">Register Account</button>
+                </form>
+            </div>
+
+            <!-- PAYMENT VIEW -->
+            <div id="payment-view" class="view">
+                <h2>Complete Payment</h2>
+                <div class="payment-summary" id="payment-summary">
+                    <!-- Injected via JS -->
+                </div>
+                <form id="payment-form">
+                    <div class="input-group"><label>Cardholder Name</label><input type="text" required></div>
+                    <div class="input-group"><label>Card Number (UPI also accepted)</label><input type="text" placeholder="XXXX-XXXX-XXXX-XXXX" required pattern="\d{16}" title="16 digit card number"></div>
+                    <div class="input-row">
+                        <div class="input-group"><label>Expiry Date</label><input type="text" placeholder="MM/YY" required></div>
+                        <div class="input-group"><label>CVV</label><input type="password" maxlength="3" required></div>
+                    </div>
+                    <button type="submit" class="primary-btn" style="background: #16a34a;">Pay Securely & Book</button>
+                    <button type="button" class="btn-cancel" style="background: #e2e8f0; color: #334155; margin-top: 15px;" onclick="showView('dashboard-view')">Cancel & Go Back</button>
+                </form>
+            </div>
+
+            <!-- DASHBOARD VIEW -->
+            <div id="dashboard-view" class="view" style="background: transparent; box-shadow: none; padding: 0;">
+                <div class="dashboard-header">
+                    <h2>Welcome, <span id="user-display-name"></span></h2>
+                </div>
+                
+                <div id="user-panel">
+                    <div class="dashboard-grid">
+                        
+                        <!-- Booking Form -->
+                        <div class="panel" style="flex: 1.2; min-width: 400px;">
+                            <h3>Plan Your Journey</h3>
+                            <p style="font-size: 1em; color: #64748b; margin-bottom: 25px;">Select your boarding point first to see available destinations.</p>
+                            <form id="book-ticket-form">
+                                <div class="input-group">
+                                    <label>Journey Date</label>
+                                    <input type="date" id="journey-date" required>
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label>From (Boarding)</label>
+                                    <select id="boarding-select" required><option value="">Loading...</option></select>
+                                </div>
+                                <div class="input-group">
+                                    <label>To (Destination)</label>
+                                    <select id="dropping-select" required><option value="">Select Boarding First...</option></select>
+                                </div>
+                                
+                                <p id="route-error" class="msg-error"></p>
+                                <button type="submit" class="primary-btn" style="margin-top: 15px;">Search & Book</button>
+                            </form>
+                        </div>
+
+                        <!-- User Tickets -->
+                        <div class="panel" style="flex: 1.5; min-width: 500px; background: transparent; border: none; box-shadow: none; padding: 0;">
+                            <h3 style="margin-bottom: 20px;" id="my-tickets-section">My Tickets</h3>
+                            <div id="user-tickets-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div>&copy; 2026 YatriBus - India's Priority Bus Network. All rights reserved.</div>
+        <div class="footer-links">
+            <a href="#">About Us</a> | 
+            <a href="#">Terms of Service</a> | 
+            <a href="#">Privacy Policy</a> | 
+            <a href="#">Help & Support</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
